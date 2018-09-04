@@ -1,17 +1,22 @@
 #Settings
 import logging
 from telegram.ext import Updater,  CommandHandler,  MessageHandler,  Filters,  CallbackQueryHandler
-from telegram import InlineKeyboardButton,  InlineKeyboardMarkup
+from telegram import InlineKeyboardButton,  InlineKeyboardMarkup,  ReplyKeyboardButton,  ReplyKeyboardMarkup
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
 #Callback handling
 
 def startCommand(bot,  update):
-    keyboard = [[InlineKeyboardButton("Option 1",  callback_data = '1'), 
-                        InlineKeyboardButton("Option 2",  callback_data = '2'), 
-                        InlineKeyboardButton("Option 3",  callback_data = '3')]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    #keyboard = [[InlineKeyboardButton("Option 1",  callback_data = '1'), 
+                        #InlineKeyboardButton("Option 2",  callback_data = '2'), 
+                        #InlineKeyboardButton("Option 3",  callback_data = '3')]]
+    #reply_markup = InlineKeyboardMarkup(keyboard)
+    reply_markup = ReplyKeyboardMarkup(keyboard = [
+    [ReplyKeyboardButton("Option 1",  callback_data = '1')], 
+    [ReplyKeyboardButton("Option 2",  callback_data = '2')], 
+    [ReplyKeyboardButton("Option 3",  callback_data = '3')]
+    ])
     update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
 def textMessage(bot,  update):
