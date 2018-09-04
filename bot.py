@@ -24,7 +24,7 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == '1':
-        bot.edit_message_text(text = "One", 
+        bot.send_message(text = "One", 
                                           chat_id = msg.chat_id, 
                                           message_id = msg.message_id)
     
