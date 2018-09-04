@@ -23,13 +23,12 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == '1':
-        bot.send_message(text = "One", chat_id = msg.chat_id, message_id = msg.message_id)
+        answer = "One"
     elif query.data == '2':
-        x = "Number two"
-        bot.send_message(text = x,  chat_id = msg.chat_id,  message_id = msg.message_id)
+        answer = "Number two"
     else:
-        bot.send_message(text = "Oooops",  chat_id = msg.chat_id,  message_id = msg.message_id)
-    
+        answer = "Oooops"
+    bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
