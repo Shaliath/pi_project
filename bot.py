@@ -13,15 +13,23 @@ def startCommand(bot,  update):
                         #InlineKeyboardButton("Option 3",  callback_data = '3')]]
     #reply_markup = InlineKeyboardMarkup(keyboard)
     reply_markup = ReplyKeyboardMarkup(keyboard = [
-    [InlineKeyboardButton("Option 1",  callback_data = '1')], 
-    [InlineKeyboardButton("Option 2",  callback_data = '2')], 
-    [InlineKeyboardButton("Option 3",  callback_data = '3')]
+    [dict(text = "Option 1")], 
+    [dict(text = "Option 2")], 
+    [dict(text = "Option 3")]
     ])
     update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
 def textMessage(bot,  update):
-    response = 'Got your message: ' + update.message.text
-    bot.send_message(chat_id = update.message.chat_id,  text = response)
+    #response = 'Got your message: ' + update.message.text
+    #bot.send_message(chat_id = update.message.chat_id,  text = response)
+    response = update.message.text
+    if response == '1':
+        answer = "One"
+    elif response == '2':
+        answer = "Number two"
+    else:
+        answer = "Oooops"
+    bot.edit_message_text(text = answer, chat_id = update.message.chat_id, message_id = update.message.message_id)
 
 def button(bot,  update):
     query = update.callback_query
