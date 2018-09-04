@@ -23,13 +23,13 @@ def textMessage(bot,  update):
     #response = 'Got your message: ' + update.message.text
     #bot.send_message(chat_id = update.message.chat_id,  text = response)
     response = update.message.text
-    if response == '1':
+    if response == 'Option 1':
         answer = "One"
     elif response == '2':
         answer = "Number two"
     else:
         answer = "Oooops"
-    bot.edit_message_text(text = answer, chat_id = update.message.chat_id, message_id = update.message.message_id)
+    bot.send_message(text = answer, chat_id = update.message.chat_id)
 
 def button(bot,  update):
     query = update.callback_query
