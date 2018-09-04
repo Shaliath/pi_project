@@ -18,24 +18,16 @@ def startCommand(bot,  update):
 def textMessage(bot,  update):
     response = 'Got your message: ' + update.message.text
     bot.send_message(chat_id = update.message.chat_id,  text = response)
-    
-def inline_caps(bot,  update):
-    query = update.inline_query.query
-    if not query:
-        return
-    results = list()
-    results.append(
-        InlineQueryResultArticle(
-            id = query.upper(), 
-            title = 'Caps', 
-            input_message_content = InputTextMessageContent(query.upper())
-        )
-    )
-    bot.answer_inline_query(update.inline_query.id,  results)
 
 def button(bot,  update):
     query = update.callback_query
     msg = query.message
+    
+    if query.data == '1':
+        bot.edit_message_text(text = "One", 
+                                          chat_id = msg.chat_id, 
+                                          message_id = msg.message_id)
+    
     bot.edit_message_text(text = "Selected option: {}".format(query.data), 
                                           chat_id = msg.chat_id, 
                                           message_id = msg.message_id)
@@ -58,16 +50,13 @@ def main():
     help_command_handler = CommandHandler('help',  help)
     text_message_handler = MessageHandler(Filters.text,  textMessage)
     button_handler = CallbackQueryHandler(button)
-    inline_caps_handler = InlineQueryHandler(inline_caps)
     unknown_handler = MessageHandler(Filters.command,  unknown)
     
     #Adding handlers to dispatcher
     dispatcher.add_handler(start_command_handler)
     dispatcher.add_handler(help_command_handler)
     dispatcher.add_handler(text_message_handler)
-    
     dispatcher.add_handler(button_handler)
-    dispatcher.add_handler(inline_caps_handler)
     dispatcher.add_handler(unknown_handler)
 
     #Start seeking for updates
