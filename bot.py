@@ -1,14 +1,13 @@
 #Settings
 import logging
-from telegram.ext import Updater,  CommandHandler,  MessageHandler,  Filters,  InlineQueryHandler,  CallbackQueryHandler
-from telegram import InlineQueryResultArticle,  InputTextMessageContent,  InlineKeyboardButton,  InlineKeyboardMarkup
+from telegram.ext import Updater,  CommandHandler,  MessageHandler,  Filters,  CallbackQueryHandler
+from telegram import InlineKeyboardButton,  InlineKeyboardMarkup
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
 #Callback handling
 
 def startCommand(bot,  update):
-    bot.send_message(chat_id = update.message.chat_id,  text = 'Hi, let\'s go')
     keyboard = [[InlineKeyboardButton("Option 1",  callback_data = '1'), 
                         InlineKeyboardButton("Option 2",  callback_data = '2'), 
                         InlineKeyboardButton("Option 3",  callback_data = '3')]]
@@ -24,13 +23,14 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == '1':
-        bot.send_message(text = "One", 
-                                          chat_id = msg.chat_id, 
-                                          message_id = msg.message_id)
+        bot.send_message(text = "One", chat_id = msg.chat_id, message_id = msg.message_id)
+    elif query.data == '2':
+        x = "Number two"
+        bot.send_message(text = x,  chat_id = msg.chat_id,  message_id = msg.message_id)
+    else:
+        bot.send_message(text = "Oooops",  chat_id = msg.chat_id,  message_id = msg.message_id)
     
-    bot.edit_message_text(text = "Selected option: {}".format(query.data), 
-                                          chat_id = msg.chat_id, 
-                                          message_id = msg.message_id)
+    #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
     update.message.reply_text("Use /start to begin")
