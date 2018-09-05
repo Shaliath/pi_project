@@ -11,10 +11,6 @@ lightStatus = "Off"
 #Callback handling
 
 def startCommand(bot,  update):
-    #keyboard = [[InlineKeyboardButton("Option 1",  callback_data = '1'), 
-                        #InlineKeyboardButton("Option 2",  callback_data = '2'), 
-                        #InlineKeyboardButton("Option 3",  callback_data = '3')]]
-    #reply_markup = InlineKeyboardMarkup(keyboard)
     reply_markup = ReplyKeyboardMarkup(keyboard = [
     [dict(text = "Info")], 
     [dict(text = "Control")]
@@ -22,8 +18,6 @@ def startCommand(bot,  update):
     update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
 def textMessage(bot,  update):
-    #response = 'Got your message: ' + update.message.text
-    #bot.send_message(chat_id = update.message.chat_id,  text = response)
     response = update.message.text
     if response == 'Info':
         infoMenu(bot, update)
@@ -64,7 +58,7 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == 'temp':
-        answer = "Temperature is 21 C"
+        bot.answer_calback_query(query.query_id, text = "Temperature is 21 C", show_alert = True)
     elif query.data == 'pres':
         answer = "Pressure is good"
     elif query.data == 'hum':
@@ -81,7 +75,7 @@ def button(bot,  update):
         lightStatus = "Off"
     else:
         answer = "Oooops"
-    bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
+        bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
