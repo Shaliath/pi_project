@@ -2,6 +2,7 @@
 import logging
 from telegram.ext import Updater,  CommandHandler,  MessageHandler,  Filters,  CallbackQueryHandler
 from telegram import InlineKeyboardButton,  InlineKeyboardMarkup,  ReplyKeyboardMarkup
+import pistatus
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
@@ -69,7 +70,7 @@ def button(bot,  update):
     elif query.data == 'hum':
         answer = "Humidity is good"
     elif query.data == 'pi':
-        answer = "PI is running"
+        answer = pistatus.cpuTemp()
     elif query.data == 'light_status':
         answer = "Current light status is: " + lightStatus
     elif query.data == 'light_on':
