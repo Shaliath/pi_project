@@ -58,24 +58,25 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == 'temp':
-        bot.answer_callback_query(query.id, text = "Temperature is 21 C", show_alert = True)
+        bot.answer_callback_query(query.id, text = "Temperature is 21 C", show_alert = False)
     elif query.data == 'pres':
-        answer = "Pressure is good"
+        reply = "Pressure is good"
     elif query.data == 'hum':
-        answer = "Humidity is good"
+        reply = "Humidity is good"
     elif query.data == 'pi':
-        answer = pistatus.cpuTemp()
+        reply = "Current CPU temperature is " + pistatus.cpuTemp() + " С degrees"
+        bot.answer_callback_query(query.id, text = reply, show_alert = True)
     elif query.data == 'light_status':
-        answer = "Current light status is: " + lightStatus
+        reply = "Current light status is: " + lightStatus
     elif query.data == 'light_on':
-        answer = "Light switching on"
+        reply = "Light switching on"
         lightStatus = "On"
     elif query.data == 'light_off':
-        answer = "Light switching off"
+        reply = "Light switching off"
         lightStatus = "Off"
     else:
-        answer = "Oooops"
-        bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
+        reply = "I don't have such command!"
+       bot.answer_callback_query(query.id, text = reply, show_alert = False)
     bot.delete_message(chat_id = msg.chat_id, message_id = msg.message_id)
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
