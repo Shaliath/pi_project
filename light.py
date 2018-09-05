@@ -11,14 +11,14 @@ def switchingOnTheLight():
 		return "Light is already switched on"
 	else:
 		#Switching on the light
-		return "Light switching on"
 		lightStatus = True
+		return "Light switching on"
 
 def switchingOffTheLight():
 	global lightStatus
 	if lightStatus:
 		#Switching off the light
-		return "Light switching off"
 		lightStatus = False
+		return "Light switching off"
 	else:
 		return "Light is already switched off"
