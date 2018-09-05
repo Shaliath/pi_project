@@ -25,13 +25,13 @@ def textMessage(bot,  update):
     #bot.send_message(chat_id = update.message.chat_id,  text = response)
     response = update.message.text
     if response == 'Info':
-        infoMenu()
+        infoMenu(bot, update)
     elif response == 'Control':
-        controlMenu()
+        controlMenu(bot, update)
     elif response == "Home":
-        startCommand()
+        startCommand(bot, update)
     elif response == "Light":
-
+        lightMenu(bot, update)
     else:
         bot.send_message(text = "Oooops", chat_id = update.message.chat_id)
 
