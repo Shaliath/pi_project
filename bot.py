@@ -3,6 +3,9 @@ import logging
 from telegram.ext import Updater,  CommandHandler,  MessageHandler,  Filters,  CallbackQueryHandler
 from telegram import InlineKeyboardButton,  InlineKeyboardMarkup,  ReplyKeyboardMarkup
 import pistatus
+import pressure
+import temperature
+import light
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,7 +18,7 @@ def startCommand(bot,  update):
     [dict(text = "Info")], 
     [dict(text = "Control")]
     ])
-    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+    update.message.reply_text('Please choose option: ',  reply_markup = reply_markup)
 
 def textMessage(bot,  update):
     response = update.message.text
@@ -36,7 +39,7 @@ def infoMenu(bot, update):
                         InlineKeyboardButton("Humidity",  callback_data = 'hum'),
                         InlineKeyboardButton("PI info", callback_data = 'pi')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+    update.message.reply_text('Please choose option: ',  reply_markup = reply_markup)
 
 def controlMenu(bot, update):
     reply_markup = ReplyKeyboardMarkup(keyboard = [
@@ -53,16 +56,13 @@ def lightMenu(bot, update):
     update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
 def button(bot,  update):
-    global lightStatus
     query = update.callback_query
     msg = query.message
     
     if query.data == 'temp':
-        reply = "Temperature is 21 C"
-        bot.answer_callback_query(query.id, text = reply, show_alert = False)
+        bot.answer_callback_query(query.id, text = temperature.getCurrentTemperature(), show_alert = False)
     elif query.data == 'pres':
-        reply = "Pressure is good"
-        bot.answer_callback_query(query.id, text = reply, show_alert = False)
+        bot.answer_callback_query(query.id, text = pressure.getCurrentPressure(), show_alert = False)
     elif query.data == 'hum':
         reply = "Humidity is good"
         bot.answer_callback_query(query.id, text = reply, show_alert = False)
@@ -70,16 +70,14 @@ def button(bot,  update):
         reply = "Current CPU temperature is " + pistatus.cpuTemp() + " С degrees"
         bot.answer_callback_query(query.id, text = reply, show_alert = True)
     elif query.data == 'light_status':
-        reply = "Current light status is: " + lightStatus
+        reply = "Current light status is: " + light.checkLightStatus()
         bot.answer_callback_query(query.id, text = reply, show_alert = False)
     elif query.data == 'light_on':
-        reply = "Light switching on"
+        reply = light.switchingOnTheLight()
         bot.answer_callback_query(query.id, text = reply, show_alert = True)
-        lightStatus = "On"
     elif query.data == 'light_off':
-        reply = "Light switching off"
+        reply = light.switchingOffTheLight()
         bot.answer_callback_query(query.id, text = reply, show_alert = True)
-        lightStatus = "Off"
     else:
         reply = "I don't have such command!"
         bot.answer_callback_query(query.id, text = reply, show_alert = False)
