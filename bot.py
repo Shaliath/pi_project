@@ -5,6 +5,8 @@ from telegram import InlineKeyboardButton,  InlineKeyboardMarkup,  ReplyKeyboard
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
+lightStatus = "Off"
+
 #Callback handling
 
 def startCommand(bot,  update):
@@ -13,9 +15,8 @@ def startCommand(bot,  update):
                         #InlineKeyboardButton("Option 3",  callback_data = '3')]]
     #reply_markup = InlineKeyboardMarkup(keyboard)
     reply_markup = ReplyKeyboardMarkup(keyboard = [
-    [dict(text = "Option 1")], 
-    [dict(text = "Option 2")], 
-    [dict(text = "Option 3")]
+    [dict(text = "Info")], 
+    [dict(text = "Control")]
     ])
     update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
@@ -23,22 +24,60 @@ def textMessage(bot,  update):
     #response = 'Got your message: ' + update.message.text
     #bot.send_message(chat_id = update.message.chat_id,  text = response)
     response = update.message.text
-    if response == 'Option 1':
-        answer = "One"
-    elif response == '2':
-        answer = "Number two"
+    if response == 'Info':
+        infoMenu()
+    elif response == 'Control':
+        controlMenu()
+    elif response == "Home":
+        startCommand()
+    elif response == "Light":
+
     else:
-        answer = "Oooops"
-    bot.send_message(text = answer, chat_id = update.message.chat_id)
+        bot.send_message(text = "Oooops", chat_id = update.message.chat_id)
+
+def infoMenu(bot, update):
+    keyboard = [[InlineKeyboardButton("Temperature",  callback_data = 'temp'), 
+                        InlineKeyboardButton("Pressure",  callback_data = 'pres'), 
+                        InlineKeyboardButton("Humidity",  callback_data = 'hum'),
+                        InlineKeyboardButton("PI info", callback_data = 'pi')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+
+def controlMenu(bot, update):
+    reply_markup = ReplyKeyboardMarkup(keyboard = [
+    [dict(text = "Light")], 
+    [dict(text = "Home")]
+    ])
+    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+
+def lightMenu(bot, update):
+    keyboard = [[InlineKeyboardButton("Status",  callback_data = 'light_status'), 
+                        InlineKeyboardButton("On",  callback_data = 'light_on'), 
+                        InlineKeyboardButton("Off",  callback_data = 'light_off')]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
 
 def button(bot,  update):
+    global lightStatus
     query = update.callback_query
     msg = query.message
     
-    if query.data == '1':
-        answer = "One"
-    elif query.data == '2':
-        answer = "Number two"
+    if query.data == 'temp':
+        answer = "Temperature is 21 C"
+    elif query.data == 'pres':
+        answer = "Pressure is good"
+    elif query.data == 'hum':
+        answer = "Humidity is good"
+    elif query.data == 'pi':
+        answer = "PI is running"
+    elif query.data == 'light_status':
+        answer = "Current light status is: " + lightStatus
+    elif query.data == 'light_on':
+        answer = "Light switching on"
+        lightStatus = "On"
+    elif query.data == 'light_off':
+        answer = "Light switching off"
+        lightStatus = "Off"
     else:
         answer = "Oooops"
     bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
