@@ -6,6 +6,7 @@ def checkLightStatus():
 	return "Off"
 
 def switchingOnTheLight():
+	global lightStatus
 	if lightStatus:
 		return "Light is already switched on"
 	else:
@@ -14,6 +15,7 @@ def switchingOnTheLight():
 		lightStatus = True
 
 def switchingOffTheLight():
+	global lightStatus
 	if lightStatus:
 		#Switching off the light
 		return "Light switching off"
