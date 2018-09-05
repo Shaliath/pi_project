@@ -58,7 +58,7 @@ def button(bot,  update):
     msg = query.message
     
     if query.data == 'temp':
-        bot.answer_calback_query(query.query_id, text = "Temperature is 21 C", show_alert = True)
+        bot.answer_callback_query(query.id, text = "Temperature is 21 C", show_alert = True)
     elif query.data == 'pres':
         answer = "Pressure is good"
     elif query.data == 'hum':
@@ -76,6 +76,7 @@ def button(bot,  update):
     else:
         answer = "Oooops"
         bot.edit_message_text(text = answer, chat_id = msg.chat_id, message_id = msg.message_id)
+    bot.delete_message(chat_id = msg.chat_id, message_id = msg.message_id)
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
