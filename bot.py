@@ -6,6 +6,7 @@ import pistatus
 import pressure
 import temperature
 import light
+import configuration
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
@@ -94,7 +95,7 @@ def unknown(bot, update):
     bot.send_message(chat_id = update.message.chat_id,  text = "Sorry, I didn't understand that command.")
 
 def main():
-    updater = Updater(token='624979515:AAGWfi6SYwReEoUdtBh9tAhBLjgYUGZIJKM')
+    updater = Updater(token=configuration.token)
     dispatcher = updater.dispatcher
     
     #Handlers
