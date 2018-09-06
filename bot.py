@@ -19,7 +19,7 @@ def startCommand(bot,  update):
     [dict(text = "Info")], 
     [dict(text = "Control")]
     ])
-    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+    update.message.reply_text('Please choose option: ',  reply_markup = reply_markup)
 
 def textMessage(bot,  update):
     response = update.message.text
@@ -40,7 +40,7 @@ def infoMenu(bot, update):
                         InlineKeyboardButton("Humidity",  callback_data = 'hum'),
                         InlineKeyboardButton("PI info", callback_data = 'pi')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Please choose: ',  reply_markup = reply_markup)
+    update.message.reply_text('Please choose option: ',  reply_markup = reply_markup)
 
 def controlMenu(bot, update):
     reply_markup = ReplyKeyboardMarkup(keyboard = [
