@@ -83,6 +83,7 @@ def button(bot,  update):
         reply = "I don't have such command!"
         bot.answer_callback_query(query.id, text = reply, show_alert = False)
     bot.delete_message(chat_id = msg.chat_id, message_id = msg.message_id)
+    
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
