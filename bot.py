@@ -6,6 +6,7 @@ import pistatus
 import pressure
 import temperature
 import light
+import configuration
 
 logging.basicConfig(format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',  level = logging.INFO)
 logger = logging.getLogger(__name__)
@@ -82,6 +83,7 @@ def button(bot,  update):
         reply = "I don't have such command!"
         bot.answer_callback_query(query.id, text = reply, show_alert = False)
     bot.delete_message(chat_id = msg.chat_id, message_id = msg.message_id)
+    
     #bot.edit_message_text(text = "Selected option: {}".format(query.data), chat_id = msg.chat_id, message_id = msg.message_id)
 
 def help(bot,  update):
@@ -94,7 +96,7 @@ def unknown(bot, update):
     bot.send_message(chat_id = update.message.chat_id,  text = "Sorry, I didn't understand that command.")
 
 def main():
-    updater = Updater(token='624979515:AAGWfi6SYwReEoUdtBh9tAhBLjgYUGZIJKM')
+    updater = Updater(token=configuration.token)
     dispatcher = updater.dispatcher
     
     #Handlers
